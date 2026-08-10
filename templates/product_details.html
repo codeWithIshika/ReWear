@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ product.name }} | ReWear
+{% endblock %}
+
+{% block content %}
+
+<section class="product-page">
+
+    <div class="container">
+
+        <!-- BACK -->
+
+        <a href="/shop" class="product-back">
+            ← Back to Shop
+        </a>
+
+
+        <div class="product-detail-grid">
+
+
+            <!-- =================================================
+                 IMAGE
+            ================================================== -->
+
+            <div class="product-detail-visual">
+
+                <div class="detail-image-box">
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/' + product.image_url
+                        ) }}"
+                        alt="{{ product.name }}"
+                        class="detail-image"
+                    >
+
+
+                    {% if product.discount_percentage > 0 %}
+
+                    <span class="detail-discount">
+                        {{ product.discount_percentage }}% OFF
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PRODUCT INFORMATION
+            ================================================== -->
+
+            <div class="product-detail-info">
+
+                <!-- CATEGORY -->
+
+                <span class="detail-category">
+
+                    {% if product.category %}
+                        {{ product.category.name }}
+                    {% else %}
+                        Fashion
+                    {% endif %}
+
+                </span>
+
+
+                <!-- NAME -->
+
+                <h1 class="detail-title">
+                    {{ product.name }}
+                </h1>
+
+
+                <!-- PRICE -->
+
+                <div class="detail-price-row">
+
+                    <span class="detail-price">
+                        ₹{{ product.price }}
+                    </span>
+
+
+                    {% if product.original_price %}
+
+                    <span class="detail-original-price">
+                        ₹{{ product.original_price }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                {% if product.discount_percentage > 0 %}
+
+                <p class="save-text">
+                    You save {{ product.discount_percentage }}% on this piece
+                </p>
+
+                {% endif %}
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="detail-description-box">
+
+                    <h3>
+                        About this piece
+                    </h3>
+
+                    <p class="detail-description">
+                        {{ product.description }}
+                    </p>
+
+                </div>
+
+
+                <!-- PRODUCT DETAILS -->
+
+                <div class="detail-specs">
+
+                    <div class="spec-item">
+
+                        <span class="spec-label">
+                            Brand
+                        </span>
+
+                        <strong>
+                            {{ product.brand or "Not specified" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="spec-item">
+
+                        <span class="spec-label">
+                            Size
+                        </span>
+
+                        <strong>
+                            {{ product.size or "Not specified" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="spec-item">
+
+                        <span class="spec-label">
+                            Condition
+                        </span>
+
+                        <strong>
+                            {{ product.condition or "Pre-loved" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="spec-item">
+
+                        <span class="spec-label">
+                            Availability
+                        </span>
+
+                        {% if product.stock > 0 %}
+
+                        <strong class="stock-available">
+                            {{ product.stock }} available
+                        </strong>
+
+                        {% else %}
+
+                        <strong class="stock-unavailable">
+                            Out of stock
+                        </strong>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                {% if product.stock > 0 %}
+
+                <a
+                    href="{{ url_for(
+                        'cart.add_to_cart',
+                        product_id=product.id
+                    ) }}"
+                    class="detail-add-cart"
+                >
+                    <span>
+                        Add to Cart
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+                </a>
+
+                {% else %}
+
+                <div class="detail-out-stock">
+                    This item is currently unavailable
+                </div>
+
+                {% endif %}
+
+
+                <!-- WISHLIST -->
+
+                <a
+                    href="{{ url_for(
+                        'wishlist.add_to_wishlist',
+                        product_id=product.id
+                    ) }}"
+                    class="detail-wishlist"
+                >
+                    ♡
+                    Add to Wishlist
+                </a>
+
+
+                <!-- NOTE -->
+
+                <div class="detail-note">
+
+                    <span>♻</span>
+
+                    <p>
+                        Every ReWear piece gets a second chance
+                        instead of ending up in a landfill.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

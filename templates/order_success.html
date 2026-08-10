@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}
+Order Confirmed | ReWear
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div style="
+        max-width: 650px;
+        margin: 80px auto;
+        text-align: center;
+    ">
+
+        <div style="
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            background: #eee8e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        ">
+            ✓
+        </div>
+
+        <h1>
+            Order Confirmed!
+        </h1>
+
+        <p style="
+            color: #666;
+            font-size: 17px;
+            margin: 15px 0;
+        ">
+            Thank you for shopping with ReWear.
+            Your order has been placed successfully.
+        </p>
+
+        <div style="
+            background: #faf8f5;
+            border-radius: 14px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        ">
+
+            <p>
+                <strong>Order Number:</strong>
+                {{ order.order_number }}
+            </p>
+
+            <p>
+                <strong>Total Amount:</strong>
+                ₹{{ order.total_amount }}
+            </p>
+
+            <p>
+                <strong>Payment Status:</strong>
+                Pending
+            </p>
+
+            <p>
+                <strong>Order Status:</strong>
+                {{ order.status }}
+            </p>
+
+        </div>
+
+        <a
+            href="/shop"
+            style="
+                display: inline-block;
+                padding: 13px 25px;
+                background: #252525;
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+            "
+        >
+            Continue Shopping
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

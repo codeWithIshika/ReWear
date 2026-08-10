@@ -1,0 +1,709 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ title }} | ReWear
+{% endblock %}
+
+{% block content %}
+
+<div class="info-page">
+
+    <div class="container">
+
+        <!-- =========================
+             PAGE HERO
+        ========================== -->
+
+        <section class="info-hero">
+
+            <div class="info-hero-text">
+
+                <span class="info-eyebrow">
+                    REWEAR
+                </span>
+
+                <h1>
+                    {{ title }}
+                </h1>
+
+                <p class="info-subtitle">
+                    {{ subtitle }}
+                </p>
+
+            </div>
+
+            <div class="info-hero-line"></div>
+
+        </section>
+
+
+        <!-- =========================
+             ABOUT
+        ========================== -->
+
+        {% if page == "about" %}
+
+        <section class="info-feature">
+
+            <div class="info-feature-number">
+                01
+            </div>
+
+            <div class="info-feature-content">
+
+                <span class="info-small-title">
+                    OUR PURPOSE
+                </span>
+
+                <h2>
+                    Fashion deserves
+                    <span>a second chance.</span>
+                </h2>
+
+                <p>
+                    ReWear is a pre-loved fashion store created
+                    to make sustainable fashion simple, affordable
+                    and exciting.
+                </p>
+
+                <p>
+                    We believe great clothes don't have to be new.
+                    Every piece deserves another life, and every
+                    shopper deserves the chance to discover
+                    something unique.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="info-card-grid">
+
+            <div class="info-card-large">
+
+                <span class="info-card-number">
+                    01
+                </span>
+
+                <h3>
+                    Better for your wardrobe.
+                </h3>
+
+                <p>
+                    Discover unique pieces that add personality
+                    to your wardrobe without the usual price tag.
+                </p>
+
+            </div>
+
+
+            <div class="info-card-large">
+
+                <span class="info-card-number">
+                    02
+                </span>
+
+                <h3>
+                    Better for the planet.
+                </h3>
+
+                <p>
+                    Giving existing clothes another life means
+                    keeping good fashion in use for longer.
+                </p>
+
+            </div>
+
+
+            <div class="info-card-large">
+
+                <span class="info-card-number">
+                    03
+                </span>
+
+                <h3>
+                    Better for everyone.
+                </h3>
+
+                <p>
+                    We believe sustainable fashion should be
+                    accessible, stylish and genuinely enjoyable.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CONTACT
+        ========================== -->
+
+        {% elif page == "contact" %}
+
+        <section class="info-feature contact-feature">
+
+            <div class="info-feature-number">
+                ✦
+            </div>
+
+            <div class="info-feature-content">
+
+                <span class="info-small-title">
+                    GET IN TOUCH
+                </span>
+
+                <h2>
+                    We'd love to
+                    <span>hear from you.</span>
+                </h2>
+
+                <p>
+                    Have a question about an order, product or
+                    anything else? Our team is here to help.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="contact-grid-new">
+
+            <div class="contact-card-new">
+
+                <div class="contact-card-icon">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+
+                <span>
+                    EMAIL
+                </span>
+
+                <h3>
+                    hello@rewear.com
+                </h3>
+
+                <p>
+                    Send us your questions and we'll get back
+                    to you as soon as possible.
+                </p>
+
+                <a href="mailto:hello@rewear.com">
+                    Send an email →
+                </a>
+
+            </div>
+
+
+            <div class="contact-card-new">
+
+                <div class="contact-card-icon">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+
+                <span>
+                    RESPONSE TIME
+                </span>
+
+                <h3>
+                    24–48 hours
+                </h3>
+
+                <p>
+                    Our team usually responds within one to
+                    two business days.
+                </p>
+
+            </div>
+
+
+            <div class="contact-card-new">
+
+                <div class="contact-card-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+
+                <span>
+                    CUSTOMER SUPPORT
+                </span>
+
+                <h3>
+                    We're here to help.
+                </h3>
+
+                <p>
+                    Whether it's an order or a product question,
+                    don't hesitate to reach out.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SHIPPING
+        ========================== -->
+
+        {% elif page == "shipping" %}
+
+        <section class="policy-intro">
+
+            <span class="info-small-title">
+                DELIVERY GUIDE
+            </span>
+
+            <h2>
+                Your order,
+                <span>on its way.</span>
+            </h2>
+
+            <p>
+                We carefully pack every ReWear order before
+                sending it your way. Here's everything you need
+                to know about delivery.
+            </p>
+
+        </section>
+
+
+        <section class="policy-grid">
+
+            <div class="policy-card">
+
+                <span class="policy-number">
+                    01
+                </span>
+
+                <i class="fa-solid fa-box"></i>
+
+                <h3>
+                    Delivery
+                </h3>
+
+                <p>
+                    Orders are generally delivered within
+                    <strong>3–7 business days</strong>,
+                    depending on your location.
+                </p>
+
+            </div>
+
+
+            <div class="policy-card">
+
+                <span class="policy-number">
+                    02
+                </span>
+
+                <i class="fa-solid fa-truck-fast"></i>
+
+                <h3>
+                    Shipping Charges
+                </h3>
+
+                <p>
+                    Shipping is <strong>free on orders of ₹999
+                    or more</strong>. Orders below ₹999 have
+                    a standard shipping charge of ₹49.
+                </p>
+
+            </div>
+
+
+            <div class="policy-card">
+
+                <span class="policy-number">
+                    03
+                </span>
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <h3>
+                    Order Tracking
+                </h3>
+
+                <p>
+                    Once your order has been shipped, tracking
+                    information will be shared with you.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             RETURNS
+        ========================== -->
+
+        {% elif page == "returns" %}
+
+        <section class="policy-intro">
+
+            <span class="info-small-title">
+                RETURNS & EXCHANGES
+            </span>
+
+            <h2>
+                We want you to
+                <span>love your finds.</span>
+            </h2>
+
+            <p>
+                If something isn't right with your order,
+                please contact us as soon as possible after
+                receiving it.
+            </p>
+
+        </section>
+
+
+        <section class="return-steps">
+
+            <div class="return-step">
+
+                <span>
+                    01
+                </span>
+
+                <div>
+
+                    <h3>
+                        Check your item
+                    </h3>
+
+                    <p>
+                        Items should be returned in the same
+                        condition in which they were received.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="return-step">
+
+                <span>
+                    02
+                </span>
+
+                <div>
+
+                    <h3>
+                        Contact us
+                    </h3>
+
+                    <p>
+                        Email us with your order number and
+                        the reason for your return.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="return-step">
+
+                <span>
+                    03
+                </span>
+
+                <div>
+
+                    <h3>
+                        Follow the next steps
+                    </h3>
+
+                    <p>
+                        Our team will review your request and
+                        guide you through the return process.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="info-note-new">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <p>
+                Return eligibility may vary depending on the
+                condition and type of item.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             FAQ
+        ========================== -->
+
+        {% elif page == "faq" %}
+
+        <section class="faq-intro">
+
+            <span class="info-small-title">
+                NEED HELP?
+            </span>
+
+            <h2>
+                Questions,
+                <span>answered.</span>
+            </h2>
+
+            <p>
+                Quick answers to some of the questions we
+                hear most often.
+            </p>
+
+        </section>
+
+
+        <section class="faq-list-new">
+
+            <details>
+                <summary>
+                    <span>01</span>
+                    Are all ReWear products pre-loved?
+                    <b>+</b>
+                </summary>
+
+                <div>
+                    <p>
+                        ReWear focuses on pre-loved fashion
+                        pieces that are ready for a second life.
+                    </p>
+                </div>
+
+            </details>
+
+
+            <details>
+                <summary>
+                    <span>02</span>
+                    How can I place an order?
+                    <b>+</b>
+                </summary>
+
+                <div>
+                    <p>
+                        Add your favourite products to your cart,
+                        proceed to checkout and complete your
+                        order details.
+                    </p>
+                </div>
+
+            </details>
+
+
+            <details>
+                <summary>
+                    <span>03</span>
+                    How much is shipping?
+                    <b>+</b>
+                </summary>
+
+                <div>
+                    <p>
+                        Shipping is free on orders of ₹999 or more.
+                        Otherwise, a ₹49 shipping charge applies.
+                    </p>
+                </div>
+
+            </details>
+
+
+            <details>
+                <summary>
+                    <span>04</span>
+                    Can I return an item?
+                    <b>+</b>
+                </summary>
+
+                <div>
+                    <p>
+                        Please contact us with your order number
+                        and we'll help you with the return process.
+                    </p>
+                </div>
+
+            </details>
+
+
+            <details>
+                <summary>
+                    <span>05</span>
+                    How can I contact ReWear?
+                    <b>+</b>
+                </summary>
+
+                <div>
+                    <p>
+                        You can email us at
+                        hello@rewear.com.
+                    </p>
+                </div>
+
+            </details>
+
+        </section>
+
+
+        <!-- =========================
+             SUSTAINABILITY
+        ========================== -->
+
+        {% elif page == "sustainability" %}
+
+        <section class="sustainability-hero">
+
+            <div>
+
+                <span class="info-small-title">
+                    OUR IMPACT
+                </span>
+
+                <h2>
+                    Fashion with
+                    <span>a lighter footprint.</span>
+                </h2>
+
+                <p>
+                    The fashion industry produces enormous
+                    amounts of waste. ReWear is built around
+                    a simple idea: give existing clothes more
+                    time in the world.
+                </p>
+
+            </div>
+
+            <div class="sustainability-symbol">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+
+        </section>
+
+
+        <section class="sustainability-grid">
+
+            <div>
+                <span>01</span>
+
+                <h3>
+                    Reuse what exists.
+                </h3>
+
+                <p>
+                    Choosing pre-loved fashion means choosing
+                    to reuse what already exists instead of
+                    constantly buying something new.
+                </p>
+            </div>
+
+
+            <div>
+                <span>02</span>
+
+                <h3>
+                    Keep fashion moving.
+                </h3>
+
+                <p>
+                    Every ReWear purchase gives a pre-loved
+                    piece another opportunity to be worn,
+                    loved and enjoyed.
+                </p>
+            </div>
+
+
+            <div>
+                <span>03</span>
+
+                <h3>
+                    One piece at a time.
+                </h3>
+
+                <p>
+                    Small choices can add up. Extending the
+                    life of clothing is one simple way to make
+                    fashion more thoughtful.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             OUR STORY
+        ========================== -->
+
+        {% elif page == "story" %}
+
+        <section class="story-section">
+
+            <div class="story-number">
+                01
+            </div>
+
+            <div class="story-content">
+
+                <span class="info-small-title">
+                    WHERE IT STARTED
+                </span>
+
+                <h2>
+                    The ReWear
+                    <span>story.</span>
+                </h2>
+
+                <p>
+                    ReWear started with a simple thought:
+                    clothes shouldn't become waste just because
+                    someone is ready to move on from them.
+                </p>
+
+                <p>
+                    We created ReWear to make discovering
+                    pre-loved fashion feel modern, simple and
+                    enjoyable.
+                </p>
+
+                <p>
+                    From unique finds to everyday wardrobe
+                    pieces, we're here to help fashion keep moving.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <div class="story-quote">
+
+            <span>
+                “
+            </span>
+
+            <p>
+                Fashion doesn't always need something new.
+                Sometimes it just needs another chance.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

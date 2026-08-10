@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Profile | ReWear
+{% endblock %}
+
+
+{% block content %}
+
+<section style="padding:70px 0;">
+
+    <div class="container">
+
+        <h1>
+            My Profile
+        </h1>
+
+        <div
+            style="
+                background:white;
+                padding:30px;
+                border-radius:16px;
+                max-width:600px;
+                margin-top:30px;
+            "
+        >
+
+            <p>
+                <strong>Name:</strong>
+                {{ user.name }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ user.email }}
+            </p>
+
+            <p>
+                <strong>Member since:</strong>
+                {{ user.created_at.strftime('%d %B %Y') if user.created_at else 'Recently' }}
+            </p>
+
+
+            <div style="margin-top:25px;">
+
+                <a
+                    href="{{ url_for('auth.logout') }}"
+                    style="
+                        display:inline-block;
+                        padding:12px 20px;
+                        background:#252525;
+                        color:white;
+                        text-decoration:none;
+                        border-radius:8px;
+                    "
+                >
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

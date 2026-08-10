@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create Account | ReWear
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+.auth-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 20px;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.auth-box h1 {
+    margin-bottom: 10px;
+}
+
+.auth-box > p {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    outline: none;
+}
+
+.auth-form input:focus {
+    border-color: #8b5e3c;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #252525;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.auth-button:hover {
+    background: #8b5e3c;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #777;
+}
+
+.auth-footer a {
+    color: #8b5e3c;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-box">
+
+        <h1>
+            Create Your Account
+        </h1>
+
+        <p>
+            Join ReWear and discover unique thrift finds.
+        </p>
+
+
+        <form
+            method="POST"
+            class="auth-form"
+        >
+
+            <label>
+                Name
+            </label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Your name"
+                required
+            >
+
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+            >
+
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="At least 6 characters"
+                minlength="6"
+                required
+            >
+
+
+            <label>
+                Confirm Password
+            </label>
+
+            <input
+                type="password"
+                name="confirm_password"
+                placeholder="Confirm your password"
+                minlength="6"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="auth-button"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+
+        <div class="auth-footer">
+
+            Already have an account?
+
+            <a href="{{ url_for('auth.login') }}">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

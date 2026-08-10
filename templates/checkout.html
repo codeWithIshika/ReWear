@@ -1,0 +1,437 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout | ReWear
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+.checkout-page {
+    padding: 60px 0 90px;
+}
+
+.checkout-title {
+    font-size: 40px;
+    margin-bottom: 35px;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 35px;
+    align-items: start;
+}
+
+.checkout-form,
+.checkout-summary {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #eee;
+}
+
+.checkout-form h2,
+.checkout-summary h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    outline: none;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #8b5e3c;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.checkout-button {
+    width: 100%;
+    border: none;
+    background: #252525;
+    color: white;
+    padding: 15px;
+    border-radius: 9px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.checkout-button:hover {
+    background: #8b5e3c;
+}
+
+.checkout-product {
+    display: flex;
+    gap: 14px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.checkout-product img {
+    width: 65px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.checkout-product-info {
+    flex: 1;
+}
+
+.checkout-product-info h3 {
+    margin: 0 0 5px;
+    font-size: 15px;
+}
+
+.checkout-product-info p {
+    margin: 3px 0;
+    color: #777;
+    font-size: 13px;
+}
+
+.checkout-product-price {
+    font-weight: 600;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 0;
+    color: #666;
+}
+
+.summary-total {
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+    padding-top: 20px;
+    color: #252525;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.demo-payment {
+    margin-top: 20px;
+    padding: 14px;
+    background: #f1eee9;
+    border-radius: 8px;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+@media (max-width: 850px) {
+
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 550px) {
+
+    .checkout-page {
+        padding: 40px 0 60px;
+    }
+
+    .checkout-title {
+        font-size: 32px;
+    }
+
+    .checkout-form,
+    .checkout-summary {
+        padding: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="checkout-page">
+
+    <div class="container">
+
+        <h1 class="checkout-title">
+            Checkout
+        </h1>
+
+
+        <div class="checkout-layout">
+
+
+            <!-- =========================
+                 CUSTOMER INFORMATION
+            ========================= -->
+
+            <form
+                method="POST"
+                class="checkout-form"
+            >
+
+                <h2>
+                    Delivery Information
+                </h2>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        value="{{ current_user.name }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="10-digit mobile number"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Address
+                    </label>
+
+                    <textarea
+                        name="address"
+                        placeholder="House number, street, area..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            City
+                        </label>
+
+                        <input
+                            type="text"
+                            name="city"
+                            placeholder="Indore"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            State
+                        </label>
+
+                        <input
+                            type="text"
+                            name="state"
+                            placeholder="Madhya Pradesh"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Pincode
+                    </label>
+
+                    <input
+                        type="text"
+                        name="pincode"
+                        placeholder="6-digit pincode"
+                        maxlength="6"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="demo-payment">
+
+                    <strong>Demo Payment</strong><br>
+
+                    This portfolio project uses a
+                    simulated payment flow.
+                    No real money will be charged.
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="checkout-button"
+                >
+                    Place Order
+                </button>
+
+            </form>
+
+
+
+            <!-- =========================
+                 ORDER SUMMARY
+            ========================= -->
+
+            <aside class="checkout-summary">
+
+                <h2>
+                    Your Order
+                </h2>
+
+
+                {% for item in items %}
+
+                <div class="checkout-product">
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/' + item.product.image_url
+                        ) }}"
+                        alt="{{ item.product.name }}"
+                    >
+
+
+                    <div class="checkout-product-info">
+
+                        <h3>
+                            {{ item.product.name }}
+                        </h3>
+
+                        <p>
+                            Qty: {{ item.quantity }}
+                        </p>
+
+                        <p class="checkout-product-price">
+                            ₹{{ item.item_total }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span>
+                        ₹{{ subtotal }}
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Shipping
+                    </span>
+
+                    <span>
+
+                        {% if shipping == 0 %}
+                            FREE
+                        {% else %}
+                            ₹{{ shipping }}
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span>
+                        ₹{{ total }}
+                    </span>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

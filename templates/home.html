@@ -1,0 +1,508 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home | ReWear
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =====================================================
+     HERO SECTION
+     ===================================================== -->
+
+<section class="rewear-hero">
+
+    <div class="rewear-hero-content">
+
+        <div class="rewear-hero-tag">
+            SUSTAINABLE FASHION · REIMAGINED
+        </div>
+
+        <h1>
+            Give Clothes<br>
+            A Second Life.
+        </h1>
+
+        <p>
+            Discover unique pre-loved fashion pieces
+            at prices you'll love. Better for your wardrobe,
+            better for the planet.
+        </p>
+
+        <div class="rewear-hero-buttons">
+
+            <a
+                href="/shop"
+                class="rewear-primary-btn"
+            >
+                Shop Now
+            </a>
+
+            <a
+                href="/shop"
+                class="rewear-secondary-btn"
+            >
+                Explore Collection
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="rewear-hero-image">
+
+        <img
+            src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85"
+            alt="Sustainable fashion"
+        >
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FEATURED FINDS
+     ===================================================== -->
+
+<section class="home-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    Featured Finds
+                </h2>
+
+                <p>
+                    Pieces we're loving right now.
+                </p>
+
+            </div>
+
+            <a
+                href="/shop"
+                class="view-all"
+            >
+                View All →
+            </a>
+
+        </div>
+
+
+        <div class="home-product-grid">
+
+            {% for product in featured_products %}
+
+            <a
+                href="{{ url_for(
+                    'shop.product_details',
+                    product_id=product.id
+                ) }}"
+                class="home-product-card"
+            >
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/' + product.image_url
+                    ) }}"
+                    alt="{{ product.name }}"
+                    class="home-product-image"
+                >
+
+
+                <div class="home-product-info">
+
+                    <span class="home-product-category">
+                        {{ product.category.name }}
+                    </span>
+
+                    <h3 class="home-product-name">
+                        {{ product.name }}
+                    </h3>
+
+                    <span class="home-product-price">
+                        ₹{{ product.price }}
+                    </span>
+
+                </div>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SHOP BY CATEGORY
+     ===================================================== -->
+
+<section class="home-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    Shop By Category
+                </h2>
+
+                <p>
+                    Find your next favourite piece.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="category-grid">
+
+
+            <!-- DRESSES -->
+
+            <a
+                href="/shop"
+                class="category-card"
+            >
+
+                <img
+    src="{{ url_for(
+        'static',
+        filename='images/categories/dresses.jpg'
+    ) }}"
+    alt="Dresses"
+>
+
+                <div class="category-overlay">
+
+                    <h3>
+                        Dresses
+                    </h3>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- TOPS -->
+
+            <a
+                href="/shop"
+                class="category-card"
+            >
+
+               <img
+    src="{{ url_for(
+        'static',
+        filename='images/categories/tops.jpg'
+    ) }}"
+    alt="Tops"
+>
+
+                <div class="category-overlay">
+
+                    <h3>
+                        Tops
+                    </h3>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- BOTTOMS -->
+
+            <a
+                href="/shop"
+                class="category-card"
+            >
+
+                <img
+    src="{{ url_for(
+        'static',
+        filename='images/categories/bottoms.jpg'
+    ) }}"
+    alt="Bottoms"
+>
+
+                <div class="category-overlay">
+
+                    <h3>
+                        Bottoms
+                    </h3>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     WHY REWEAR
+     ===================================================== -->
+
+<section class="home-section why-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    Why ReWear?
+                </h2>
+
+                <p>
+                    Fashion that feels good in more ways than one.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="why-grid">
+
+
+            <!-- CARD 1 -->
+
+            <div class="why-card">
+
+                <div class="why-icon">
+                    ♻
+                </div>
+
+                <h3>
+                    Better For The Planet
+                </h3>
+
+                <p>
+                    Giving pre-loved clothes another chance
+                    helps reduce fashion waste.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 2 -->
+
+            <div class="why-card">
+
+                <div class="why-icon">
+                    ₹
+                </div>
+
+                <h3>
+                    Better Prices
+                </h3>
+
+                <p>
+                    Find quality fashion without paying
+                    full retail prices.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD 3 -->
+
+            <div class="why-card">
+
+                <div class="why-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    Unique Finds
+                </h3>
+
+                <p>
+                    Discover pieces with personality that
+                    you won't find everywhere else.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TESTIMONIALS
+     ===================================================== -->
+
+<section class="home-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    Loved By Thrift Lovers
+                </h2>
+
+                <p>
+                    A few words from our community.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="testimonial-grid">
+
+
+            <!-- TESTIMONIAL 1 -->
+
+            <div class="testimonial">
+
+                <div class="stars">
+                    ★★★★★
+                </div>
+
+                <p>
+                    "The quality was honestly much better
+                    than I expected. The jacket looks brand new!"
+                </p>
+
+                <div class="customer-name">
+                    — Ananya
+                </div>
+
+            </div>
+
+
+
+            <!-- TESTIMONIAL 2 -->
+
+            <div class="testimonial">
+
+                <div class="stars">
+                    ★★★★★
+                </div>
+
+                <p>
+                    "I love finding unique clothes without
+                    spending a lot. ReWear is now my favourite
+                    thrift store."
+                </p>
+
+                <div class="customer-name">
+                    — Riya
+                </div>
+
+            </div>
+
+
+
+            <!-- TESTIMONIAL 3 -->
+
+            <div class="testimonial">
+
+                <div class="stars">
+                    ★★★★★
+                </div>
+
+                <p>
+                    "Fast delivery, beautiful packaging and
+                    the dress was exactly as shown."
+                </p>
+
+                <div class="customer-name">
+                    — Mehak
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     NEWSLETTER
+     ===================================================== -->
+
+<section class="newsletter">
+
+    <div class="container">
+
+        <div class="newsletter-box">
+
+            <h2>
+                Stay In The Loop
+            </h2>
+
+            <p>
+                Get first access to new drops,
+                special offers and thrift tips.
+            </p>
+
+
+            <form
+                class="newsletter-form"
+                action="#"
+                method="POST"
+            >
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <button type="submit">
+                    Subscribe
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,599 @@
+{% extends "base.html" %}
+
+{% block title %}
+Cart | ReWear
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+    /* =========================
+       CART PAGE
+    ========================= */
+
+    .cart-page {
+        padding: 60px 0 90px;
+    }
+
+    .cart-title {
+        font-size: 42px;
+        margin: 0 0 35px;
+        letter-spacing: -1px;
+    }
+
+
+    /* =========================
+       CART LAYOUT
+    ========================= */
+
+    .cart-layout {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 35px;
+        align-items: start;
+    }
+
+
+    /* =========================
+       CART ITEM
+    ========================= */
+
+    .cart-items {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .cart-item {
+        background: white;
+        border-radius: 16px;
+        padding: 18px;
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 22px;
+        border: 1px solid #eee;
+    }
+
+    .cart-image {
+        width: 150px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .cart-item-info {
+        position: relative;
+    }
+
+    .cart-category {
+        color: #8b5e3c;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .cart-item-info h2 {
+        font-size: 21px;
+        margin: 8px 0;
+    }
+
+    .cart-price {
+        font-weight: 600;
+        margin: 0 0 15px;
+    }
+
+
+    /* =========================
+       QUANTITY
+    ========================= */
+
+    .quantity-wrapper {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 14px;
+    }
+
+    .quantity-wrapper a {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #252525;
+        font-size: 18px;
+        transition: 0.2s;
+    }
+
+    .quantity-wrapper a:hover {
+        background: #eeeae4;
+    }
+
+    .quantity-number {
+        min-width: 38px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .item-total {
+        margin: 0 0 10px;
+        color: #555;
+    }
+
+    .item-total strong {
+        color: #252525;
+    }
+
+
+    /* =========================
+       REMOVE
+    ========================= */
+
+    .remove-link {
+        color: #a34b4b;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .remove-link:hover {
+        text-decoration: underline;
+    }
+
+
+    /* =========================
+       ORDER SUMMARY
+    ========================= */
+
+    .cart-summary {
+        background: white;
+        border-radius: 16px;
+        padding: 28px;
+        border: 1px solid #eee;
+        position: sticky;
+        top: 100px;
+    }
+
+    .cart-summary h2 {
+        margin: 0 0 25px;
+        font-size: 23px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 13px 0;
+        color: #666;
+    }
+
+    .summary-total {
+        border-top: 1px solid #ddd;
+        margin-top: 10px;
+        padding-top: 20px;
+        color: #252525;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+
+    /* =========================
+       CHECKOUT BUTTON
+    ========================= */
+
+    .checkout-btn {
+        display: block;
+        text-align: center;
+        background: #252525;
+        color: white;
+        padding: 15px;
+        border-radius: 9px;
+        text-decoration: none;
+        margin-top: 25px;
+        transition: 0.25s;
+    }
+
+    .checkout-btn:hover {
+        background: #8b5e3c;
+    }
+
+    .continue-shopping {
+        display: block;
+        text-align: center;
+        margin-top: 17px;
+        color: #555;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .continue-shopping:hover {
+        color: #8b5e3c;
+    }
+
+
+    /* =========================
+       FREE SHIPPING MESSAGE
+    ========================= */
+
+    .shipping-message {
+        background: #f1eee9;
+        padding: 13px;
+        border-radius: 8px;
+        margin: 20px 0;
+        font-size: 13px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+
+    /* =========================
+       EMPTY CART
+    ========================= */
+
+    .empty-cart {
+        min-height: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: white;
+        border-radius: 18px;
+        padding: 40px;
+    }
+
+    .empty-cart-icon {
+        font-size: 55px;
+        margin-bottom: 15px;
+    }
+
+    .empty-cart h2 {
+        font-size: 28px;
+        margin: 0 0 10px;
+    }
+
+    .empty-cart p {
+        color: #777;
+        margin-bottom: 25px;
+    }
+
+    .shop-btn {
+        display: inline-block;
+        background: #252525;
+        color: white;
+        text-decoration: none;
+        padding: 14px 24px;
+        border-radius: 9px;
+    }
+
+    .shop-btn:hover {
+        background: #8b5e3c;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 850px) {
+
+        .cart-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .cart-summary {
+            position: static;
+        }
+
+    }
+
+
+    @media (max-width: 550px) {
+
+        .cart-page {
+            padding: 40px 0 60px;
+        }
+
+        .cart-title {
+            font-size: 34px;
+        }
+
+        .cart-item {
+            grid-template-columns: 95px 1fr;
+            gap: 15px;
+            padding: 13px;
+        }
+
+        .cart-image {
+            width: 95px;
+            height: 125px;
+        }
+
+        .cart-item-info h2 {
+            font-size: 17px;
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="cart-page">
+
+    <div class="container">
+
+        <h1 class="cart-title">
+            Your Cart
+        </h1>
+
+
+        {% if items %}
+
+        <div class="cart-layout">
+
+
+            <!-- =========================
+                 CART ITEMS
+            ========================= -->
+
+            <div class="cart-items">
+
+                {% for item in items %}
+
+                <div class="cart-item">
+
+
+                    <!-- PRODUCT IMAGE -->
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/' + item.product.image_url
+                        ) }}"
+                        alt="{{ item.product.name }}"
+                        class="cart-image"
+                    >
+
+
+                    <!-- PRODUCT DETAILS -->
+
+                    <div class="cart-item-info">
+
+                        <span class="cart-category">
+                            {{ item.product.category.name }}
+                        </span>
+
+
+                        <h2>
+                            {{ item.product.name }}
+                        </h2>
+
+
+                        <p class="cart-price">
+                            ₹{{ item.product.price }}
+                        </p>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="quantity-wrapper">
+
+                            <a
+                                href="{{ url_for(
+                                    'cart.decrease_quantity',
+                                    product_id=item.product.id
+                                ) }}"
+                                aria-label="Decrease quantity"
+                            >
+                                −
+                            </a>
+
+
+                            <span class="quantity-number">
+                                {{ item.quantity }}
+                            </span>
+
+
+                            <a
+                                href="{{ url_for(
+                                    'cart.increase_quantity',
+                                    product_id=item.product.id
+                                ) }}"
+                                aria-label="Increase quantity"
+                            >
+                                +
+                            </a>
+
+                        </div>
+
+
+                        <p class="item-total">
+
+                            Item total:
+
+                            <strong>
+                                ₹{{ item.item_total }}
+                            </strong>
+
+                        </p>
+
+
+                        <a
+                            href="{{ url_for(
+                                'cart.remove_from_cart',
+                                product_id=item.product.id
+                            ) }}"
+                            class="remove-link"
+                        >
+                            Remove
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+
+                <!-- CLEAR CART -->
+
+                <div style="margin-top: 5px;">
+
+                    <a
+                        href="{{ url_for('cart.clear_cart') }}"
+                        class="remove-link"
+                        onclick="return confirm('Clear your entire cart?')"
+                    >
+                        Clear Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 ORDER SUMMARY
+            ========================= -->
+
+            <aside class="cart-summary">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span>
+                        ₹{{ subtotal }}
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Shipping
+                    </span>
+
+                    <span>
+
+                        {% if shipping == 0 %}
+                            FREE
+                        {% else %}
+                            ₹{{ shipping }}
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                {% if subtotal > 0 and subtotal < 999 %}
+
+                <div class="shipping-message">
+
+                    Add ₹{{ 999 - subtotal }} more
+                    to get <strong>FREE shipping</strong>.
+
+                </div>
+
+                {% elif subtotal >= 999 %}
+
+                <div class="shipping-message">
+
+                    🎉 You've unlocked
+                    <strong>FREE shipping!</strong>
+
+                </div>
+
+                {% endif %}
+
+
+                <div class="summary-row summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span>
+                        ₹{{ total }}
+                    </span>
+
+                </div>
+
+
+                <a
+    href="{{ url_for('checkout.checkout') }}"
+    class="checkout-btn"
+>
+    Proceed to Checkout
+</a>
+
+
+                <a
+                    href="/shop"
+                    class="continue-shopping"
+                >
+                    ← Continue Shopping
+                </a>
+
+            </aside>
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- =========================
+             EMPTY CART
+        ========================= -->
+
+        <div class="empty-cart">
+
+            <div class="empty-cart-icon">
+                🛍️
+            </div>
+
+            <h2>
+                Your cart is empty
+            </h2>
+
+            <p>
+                Looks like you haven't found
+                your next thrift gem yet.
+            </p>
+
+            <a
+                href="/shop"
+                class="shop-btn"
+            >
+                Start Shopping
+            </a>
+
+        </div>
+
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

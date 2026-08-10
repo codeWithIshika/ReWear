@@ -1,0 +1,403 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard | ReWear
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+.admin-page {
+    padding: 40px 0 80px;
+}
+
+.admin-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 30px;
+}
+
+
+/* SIDEBAR */
+
+.admin-sidebar {
+    background: #252525;
+    color: white;
+    border-radius: 16px;
+    padding: 25px 15px;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.admin-brand {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 0 12px 25px;
+}
+
+.admin-nav a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+    background: #8b5e3c;
+    color: white;
+}
+
+
+/* MAIN */
+
+.admin-main h1 {
+    margin-top: 0;
+    font-size: 34px;
+}
+
+.admin-subtitle {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+
+/* STAT CARDS */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.stat-label {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+
+/* RECENT ORDERS */
+
+.recent-orders {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.recent-orders h2 {
+    margin-top: 0;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-table th,
+.order-table td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.order-table th {
+    font-size: 13px;
+    color: #777;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #f1eee9;
+    font-size: 12px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 750px) {
+
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        position: static;
+    }
+
+    .admin-nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-main h1 {
+        font-size: 28px;
+    }
+
+    .order-table {
+        font-size: 13px;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-page">
+
+    <div class="container">
+
+        <div class="admin-layout">
+
+
+            <!-- SIDEBAR -->
+
+            <aside class="admin-sidebar">
+
+                <div class="admin-brand">
+                    ReWear Admin
+                </div>
+
+                <nav class="admin-nav">
+
+                    <a
+                        href="{{ url_for('admin.dashboard') }}"
+                        class="active"
+                    >
+                        📊 Dashboard
+                    </a>
+
+                    <a
+                        href="{{ url_for('admin.products') }}"
+                    >
+                        👕 Products
+                    </a>
+
+                    <a
+                        href="{{ url_for('admin.orders') }}"
+                    >
+                        📦 Orders
+                    </a>
+
+                    <a
+                        href="{{ url_for('admin.users') }}"
+                    >
+                        👥 Users
+                    </a>
+
+                    <a href="{{ url_for('shop.shop') }}">
+                        🛍️ View Store
+                    </a>
+
+                </nav>
+
+            </aside>
+
+
+            <!-- MAIN -->
+
+            <main class="admin-main">
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p class="admin-subtitle">
+                    Welcome to the ReWear store administration panel.
+                </p>
+
+
+                <!-- STATISTICS -->
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Total Products
+                        </div>
+
+                        <div class="stat-value">
+                            {{ total_products }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Total Users
+                        </div>
+
+                        <div class="stat-value">
+                            {{ total_users }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Total Orders
+                        </div>
+
+                        <div class="stat-value">
+                            {{ total_orders }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Total Revenue
+                        </div>
+
+                        <div class="stat-value">
+                            ₹{{ "%.0f"|format(total_revenue) }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RECENT ORDERS -->
+
+                <div class="recent-orders">
+
+                    <h2>
+                        Recent Orders
+                    </h2>
+
+
+                    {% if recent_orders %}
+
+                    <div style="overflow-x:auto;">
+
+                        <table class="order-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Order ID
+                                    </th>
+
+                                    <th>
+                                        Customer
+                                    </th>
+
+                                    <th>
+                                        Amount
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for order in recent_orders %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ order.order_number }}
+                                    </td>
+
+                                    <td>
+                                        {{ order.full_name }}
+                                    </td>
+
+                                    <td>
+                                        ₹{{ order.total_amount }}
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status">
+                                            {{ order.status }}
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    {% else %}
+
+                    <p style="color:#777;">
+                        No orders yet.
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

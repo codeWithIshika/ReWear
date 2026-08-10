@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}
+Order Confirmed | ReWear
+{% endblock %}
+
+
+{% block content %}
+
+<section style="padding:80px 20px;">
+
+    <div
+        class="container"
+        style="max-width:700px; text-align:center;"
+    >
+
+        <div
+            style="
+                background:white;
+                padding:50px 30px;
+                border-radius:20px;
+                border:1px solid #eee;
+            "
+        >
+
+            <div style="font-size:55px;">
+                ✓
+            </div>
+
+            <h1>
+                Order Confirmed!
+            </h1>
+
+            <p style="color:#777;">
+                Thank you for shopping with ReWear.
+                Your order has been successfully placed.
+            </p>
+
+
+            <div
+                style="
+                    background:#f1eee9;
+                    padding:20px;
+                    border-radius:10px;
+                    margin:25px 0;
+                "
+            >
+
+                <p>
+                    Order ID
+                </p>
+
+                <strong style="font-size:20px;">
+                    {{ order.order_number }}
+                </strong>
+
+            </div>
+
+
+            <p>
+                <strong>
+                    Total Paid:
+                </strong>
+
+                ₹{{ order.total_amount }}
+            </p>
+
+
+            <p>
+                <strong>
+                    Status:
+                </strong>
+
+                {{ order.status }}
+            </p>
+
+
+            <div style="margin-top:30px;">
+
+                <a
+                    href="{{ url_for('checkout.orders') }}"
+                    style="
+                        display:inline-block;
+                        background:#252525;
+                        color:white;
+                        padding:13px 22px;
+                        border-radius:8px;
+                        text-decoration:none;
+                        margin:5px;
+                    "
+                >
+                    View My Orders
+                </a>
+
+
+                <a
+                    href="/shop"
+                    style="
+                        display:inline-block;
+                        padding:13px 22px;
+                        border-radius:8px;
+                        text-decoration:none;
+                        color:#555;
+                        margin:5px;
+                    "
+                >
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

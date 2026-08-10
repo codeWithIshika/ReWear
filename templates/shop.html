@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shop | ReWear
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     SHOP HEADER
+========================================================= -->
+
+<section class="shop-header">
+
+    <div class="container">
+
+        <span class="shop-eyebrow">
+            REWEAR COLLECTION
+        </span>
+
+        <h1>
+            Shop Pre-Loved Fashion
+        </h1>
+
+        <p>
+            Discover unique pieces that deserve a second life.
+        </p>
+
+
+        <!-- =================================================
+             CATEGORY BUTTONS
+        ================================================== -->
+
+        <div class="shop-categories">
+
+            <a href="/shop" class="active">
+                All Products
+            </a>
+
+            <a href="/shop?category=Dresses">
+                Dresses
+            </a>
+
+            <a href="/shop?category=Tops">
+                Tops
+            </a>
+
+            <a href="/shop?category=Bottoms">
+                Bottoms
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PRODUCTS SECTION
+========================================================= -->
+
+<section class="shop-page">
+
+    <div class="container">
+
+
+        <!-- TOP BAR -->
+
+        <div class="shop-toolbar">
+
+            <div>
+
+                <strong>
+                    {{ products|length }}
+                </strong>
+
+                <span>
+                    pieces available
+                </span>
+
+            </div>
+
+
+            <a
+                href="/shop"
+                class="shop-all-link"
+            >
+                All Products
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             PRODUCT GRID
+        ================================================== -->
+
+        <div class="product-grid">
+
+            {% for product in products %}
+
+            <div class="product-card">
+
+
+                <!-- IMAGE -->
+
+                <a
+                    href="{{ url_for(
+                        'shop.product_details',
+                        product_id=product.id
+                    ) }}"
+                    class="product-image-wrapper"
+                >
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/' + product.image_url
+                        ) }}"
+                        alt="{{ product.name }}"
+                        class="product-image"
+                    >
+
+
+                    <!-- DISCOUNT BADGE -->
+
+                    {% if product.discount_percentage > 0 %}
+
+                    <span class="product-discount">
+                        {{ product.discount_percentage }}% OFF
+                    </span>
+
+                    {% endif %}
+
+
+                    <!-- STOCK BADGE -->
+
+                    {% if product.stock <= 0 %}
+
+                    <span class="sold-out-badge">
+                        Sold Out
+                    </span>
+
+                    {% elif product.stock <= 2 %}
+
+                    <span class="low-stock-badge">
+                        Only {{ product.stock }} left
+                    </span>
+
+                    {% endif %}
+
+                </a>
+
+
+                <!-- PRODUCT INFO -->
+
+                <div class="product-info">
+
+
+                    <!-- CATEGORY -->
+
+                    <span class="product-category">
+
+                        {% if product.category %}
+
+                            {{ product.category.name }}
+
+                        {% else %}
+
+                            Fashion
+
+                        {% endif %}
+
+                    </span>
+
+
+                    <!-- PRODUCT NAME -->
+
+                    <a
+                        href="{{ url_for(
+                            'shop.product_details',
+                            product_id=product.id
+                        ) }}"
+                        class="product-name-link"
+                    >
+
+                        <h2 class="product-name">
+                            {{ product.name }}
+                        </h2>
+
+                    </a>
+
+
+                    <!-- PRICE -->
+
+                    <div class="product-price-row">
+
+                        <span class="product-price">
+                            ₹{{ product.price }}
+                        </span>
+
+
+                        {% if product.original_price %}
+
+                        <span class="original-price">
+                            ₹{{ product.original_price }}
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- VIEW PRODUCT BUTTON -->
+
+                    <a
+                        href="{{ url_for(
+                            'shop.product_details',
+                            product_id=product.id
+                        ) }}"
+                        class="view-product-btn"
+                    >
+
+                        <span>
+                            View Product
+                        </span>
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            {% else %}
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="shop-empty">
+
+                <div class="shop-empty-icon">
+                    ♡
+                </div>
+
+                <h2>
+                    No products found
+                </h2>
+
+                <p>
+                    We're adding new thrift finds soon.
+                    Check back again!
+                </p>
+
+                <a
+                    href="/"
+                    class="btn"
+                >
+                    Back To Home
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

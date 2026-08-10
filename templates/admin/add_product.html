@@ -1,0 +1,558 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Product | ReWear Admin
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+.admin-page {
+    padding: 40px 0 80px;
+}
+
+.admin-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 30px;
+}
+
+/* SIDEBAR */
+
+.admin-sidebar {
+    background: #252525;
+    color: white;
+    border-radius: 16px;
+    padding: 25px 15px;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.admin-brand {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 0 12px 25px;
+}
+
+.admin-nav a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+    background: #8b5e3c;
+    color: white;
+}
+
+
+/* MAIN */
+
+.admin-main h1 {
+    margin-top: 0;
+    font-size: 34px;
+}
+
+.form-card {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 900px;
+}
+
+
+/* FORM */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 13px;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #8b5e3c;
+}
+
+.form-group textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.required {
+    color: #a33;
+}
+
+
+/* BUTTONS */
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.save-btn,
+.cancel-btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.save-btn {
+    border: none;
+    background: #252525;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #8b5e3c;
+}
+
+.cancel-btn {
+    border: 1px solid #ddd;
+    color: #555;
+    background: white;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 750px) {
+
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        position: static;
+    }
+
+    .admin-nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-page">
+
+    <div class="container">
+
+        <div class="admin-layout">
+
+
+            <!-- SIDEBAR -->
+
+            <aside class="admin-sidebar">
+
+                <div class="admin-brand">
+                    ReWear Admin
+                </div>
+
+                <nav class="admin-nav">
+
+                    <a href="{{ url_for('admin.dashboard') }}">
+                        📊 Dashboard
+                    </a>
+
+                    <a
+                        href="{{ url_for('admin.products') }}"
+                        class="active"
+                    >
+                        👕 Products
+                    </a>
+
+                    <a href="{{ url_for('admin.orders') }}">
+                        📦 Orders
+                    </a>
+
+                    <a href="{{ url_for('admin.users') }}">
+                        👥 Users
+                    </a>
+
+                    <a href="{{ url_for('shop.shop') }}">
+                        🛍️ View Store
+                    </a>
+
+                </nav>
+
+            </aside>
+
+
+            <!-- MAIN -->
+
+            <main class="admin-main">
+
+                <h1>
+                    Add Product
+                </h1>
+
+                <p style="color:#777; margin-bottom:30px;">
+                    Add a new thrift fashion product to your catalogue.
+                </p>
+
+
+                <div class="form-card">
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('admin.add_product') }}"
+                    >
+
+                        <div class="form-grid">
+
+
+                            <!-- NAME -->
+
+                            <div class="form-group full">
+
+                                <label for="name">
+                                    Product Name
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder="e.g. Vintage Denim Jacket"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- CATEGORY -->
+
+                            <div class="form-group">
+
+                                <label for="category_id">
+                                    Category
+                                    <span class="required">*</span>
+                                </label>
+
+                                <select
+                                    id="category_id"
+                                    name="category_id"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select category
+                                    </option>
+
+                                    {% for category in categories %}
+
+                                    <option value="{{ category.id }}">
+                                        {{ category.name }}
+                                    </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- BRAND -->
+
+                            <div class="form-group">
+
+                                <label for="brand">
+                                    Brand
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="brand"
+                                    name="brand"
+                                    placeholder="e.g. Levi's"
+                                >
+
+                            </div>
+
+
+                            <!-- PRICE -->
+
+                            <div class="form-group">
+
+                                <label for="price">
+                                    Selling Price (₹)
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="price"
+                                    name="price"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="599"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- ORIGINAL PRICE -->
+
+                            <div class="form-group">
+
+                                <label for="original_price">
+                                    Original Price (₹)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="original_price"
+                                    name="original_price"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="1499"
+                                >
+
+                            </div>
+
+
+                            <!-- SIZE -->
+
+                            <div class="form-group">
+
+                                <label for="size">
+                                    Size
+                                </label>
+
+                                <select
+                                    id="size"
+                                    name="size"
+                                >
+
+                                    <option value="">
+                                        Select size
+                                    </option>
+
+                                    <option value="XS">
+                                        XS
+                                    </option>
+
+                                    <option value="S">
+                                        S
+                                    </option>
+
+                                    <option value="M">
+                                        M
+                                    </option>
+
+                                    <option value="L">
+                                        L
+                                    </option>
+
+                                    <option value="XL">
+                                        XL
+                                    </option>
+
+                                    <option value="XXL">
+                                        XXL
+                                    </option>
+
+                                    <option value="Free Size">
+                                        Free Size
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- CONDITION -->
+
+                            <div class="form-group">
+
+                                <label for="condition">
+                                    Condition
+                                </label>
+
+                                <select
+                                    id="condition"
+                                    name="condition"
+                                >
+
+                                    <option value="">
+                                        Select condition
+                                    </option>
+
+                                    <option value="Like New">
+                                        Like New
+                                    </option>
+
+                                    <option value="Excellent">
+                                        Excellent
+                                    </option>
+
+                                    <option value="Good">
+                                        Good
+                                    </option>
+
+                                    <option value="Fair">
+                                        Fair
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- STOCK -->
+
+                            <div class="form-group">
+
+                                <label for="stock">
+                                    Stock Quantity
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="stock"
+                                    name="stock"
+                                    min="0"
+                                    value="1"
+                                >
+
+                            </div>
+
+
+                            <!-- IMAGE -->
+
+                            <div class="form-group">
+
+                                <label for="image_url">
+                                    Image Filename
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="image_url"
+                                    name="image_url"
+                                    placeholder="vintage_jacket.jpg"
+                                >
+
+                                <small style="color:#888;">
+                                    Put the image inside
+                                    static/images/
+                                </small>
+
+                            </div>
+
+
+                            <!-- DESCRIPTION -->
+
+                            <div class="form-group full">
+
+                                <label for="description">
+                                    Product Description
+                                </label>
+
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    placeholder="Describe the product, material, fit, style, etc."
+                                ></textarea>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="form-actions">
+
+                            <button
+                                type="submit"
+                                class="save-btn"
+                            >
+                                Add Product
+                            </button>
+
+                            <a
+                                href="{{ url_for('admin.products') }}"
+                                class="cancel-btn"
+                            >
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

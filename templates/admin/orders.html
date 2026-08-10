@@ -1,0 +1,431 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Orders | ReWear
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+.admin-page {
+    padding: 40px 0 80px;
+}
+
+.admin-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 30px;
+}
+
+/* SIDEBAR */
+
+.admin-sidebar {
+    background: #252525;
+    color: white;
+    border-radius: 16px;
+    padding: 25px 15px;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.admin-brand {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 0 12px 25px;
+}
+
+.admin-nav a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+    background: #8b5e3c;
+    color: white;
+}
+
+
+/* MAIN */
+
+.admin-main h1 {
+    margin-top: 0;
+    font-size: 34px;
+}
+
+.admin-subtitle {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+
+/* ORDERS */
+
+.orders-wrapper {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    overflow-x: auto;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.orders-table th {
+    background: #fafafa;
+    color: #777;
+    font-size: 13px;
+}
+
+.order-number {
+    font-weight: 700;
+}
+
+.customer-name {
+    font-weight: 600;
+}
+
+.customer-phone {
+    color: #777;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.amount {
+    font-weight: 700;
+}
+
+
+/* STATUS */
+
+.status-form {
+    display: flex;
+    gap: 7px;
+}
+
+.status-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: white;
+}
+
+.update-btn {
+    border: none;
+    background: #252525;
+    color: white;
+    padding: 8px 11px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.update-btn:hover {
+    background: #8b5e3c;
+}
+
+
+/* EMPTY */
+
+.empty-orders {
+    text-align: center;
+    padding: 60px 20px;
+    color: #777;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 750px) {
+
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        position: static;
+    }
+
+    .admin-nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-page">
+
+    <div class="container">
+
+        <div class="admin-layout">
+
+
+            <!-- SIDEBAR -->
+
+            <aside class="admin-sidebar">
+
+                <div class="admin-brand">
+                    ReWear Admin
+                </div>
+
+                <nav class="admin-nav">
+
+                    <a href="{{ url_for('admin.dashboard') }}">
+                        📊 Dashboard
+                    </a>
+
+                    <a href="{{ url_for('admin.products') }}">
+                        👕 Products
+                    </a>
+
+                    <a
+                        href="{{ url_for('admin.orders') }}"
+                        class="active"
+                    >
+                        📦 Orders
+                    </a>
+
+                    <a href="{{ url_for('admin.users') }}">
+                        👥 Users
+                    </a>
+
+                    <a href="{{ url_for('shop.shop') }}">
+                        🛍️ View Store
+                    </a>
+
+                </nav>
+
+            </aside>
+
+
+            <!-- MAIN -->
+
+            <main class="admin-main">
+
+                <h1>
+                    Orders
+                </h1>
+
+                <p class="admin-subtitle">
+                    Manage customer orders and update their status.
+                </p>
+
+
+                {% if orders %}
+
+                <div class="orders-wrapper">
+
+                    <table class="orders-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Order
+                                </th>
+
+                                <th>
+                                    Customer
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Amount
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for order in orders %}
+
+                            <tr>
+
+
+                                <!-- ORDER -->
+
+                                <td>
+
+                                    <div class="order-number">
+                                        #{{ order.order_number }}
+                                    </div>
+
+                                    <div
+                                        style="
+                                            color:#888;
+                                            font-size:12px;
+                                            margin-top:4px;
+                                        "
+                                    >
+                                        {{ order.items|length }} item(s)
+                                    </div>
+
+                                </td>
+
+
+                                <!-- CUSTOMER -->
+
+                                <td>
+
+                                    <div class="customer-name">
+                                        {{ order.full_name }}
+                                    </div>
+
+                                    <div class="customer-phone">
+                                        {{ order.phone }}
+                                    </div>
+
+                                </td>
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    {% if order.created_at %}
+
+                                        {{ order.created_at.strftime(
+                                            "%d %b %Y"
+                                        ) }}
+
+                                    {% else %}
+
+                                        —
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- AMOUNT -->
+
+                                <td>
+
+                                    <span class="amount">
+                                        ₹{{ order.total_amount }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'admin.update_order_status',
+                                            order_id=order.id
+                                        ) }}"
+                                        class="status-form"
+                                    >
+
+                                        <select
+                                            name="status"
+                                            class="status-select"
+                                        >
+
+                                            {% for status in [
+                                                'Pending',
+                                                'Confirmed',
+                                                'Shipped',
+                                                'Delivered',
+                                                'Cancelled'
+                                            ] %}
+
+                                            <option
+                                                value="{{ status }}"
+                                                {% if order.status == status %}
+                                                selected
+                                                {% endif %}
+                                            >
+                                                {{ status }}
+                                            </option>
+
+                                            {% endfor %}
+
+                                        </select>
+
+
+                                        <button
+                                            type="submit"
+                                            class="update-btn"
+                                        >
+                                            Update
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                {% else %}
+
+                <div class="empty-orders">
+
+                    <h2>
+                        No orders yet
+                    </h2>
+
+                    <p>
+                        Customer orders will appear here.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </main>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
